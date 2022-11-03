@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+import { useState } from "react"
+import EnterTodo from "./components/EnterTodo"
+import React from "react"
+import EachTodo from "./components/EachTodo"
 
 function App() {
+  const [todos, setTodos] = useState([])
+
+  const updateTodos = (newTodo) => {
+    if (newTodo.title && !todos.includes(newTodo.title)) {
+      setTodos([...todos, newTodo])
+    }
+  }
+
+  console.log("todos:", todos)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Todo checklist</h2>
+      <EnterTodo updateTodos={updateTodos} />
+      {todos.map((todo) => (
+        <EachTodo todo={todo} key={todo.id} todos={todos} setTodos={setTodos} />
+      ))}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
